@@ -139,8 +139,10 @@ for col, config in enumerate(configs):
             fun=lambda xi, Y: dY_dxi(xi, Y, params),
             t_span=xi_span,
             y0=Y0,
-            method='Radau', # Implicit solver for stiffness handling
-            t_eval=xi_eval
+            method='LSODA',  # Changed from 'Radau' to match paper's approach
+            t_eval=xi_eval,
+            atol=1e-8,       # High precision helps avoid "Singular Matrix" errors
+            rtol=1e-5
         )
         
         # To match the paper's visualization axis exactly, shift xi so the expansion starts at 0
